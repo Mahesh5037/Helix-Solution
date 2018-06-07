@@ -1,0 +1,163 @@
+﻿<head>
+    <title></title>
+    
+
+    <style>
+        .float {
+            float: right;
+            margin-left: 9px !important;
+           
+        }
+        .ui-grid-cell-contents {
+            white-space: nowrap !important;
+        }
+
+        .pie1 {
+            width: 260px !important;
+            height: 150px !important;
+            /*margin-left: -40px;*/
+        }
+        .tile {
+            width: 60%;
+            height: 170px;
+            box-shadow: 0 0 black;
+        }
+            .tile > div {
+                width:260px;
+            }
+          
+        .round {
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .yet_to_start {
+            background-color: #D3D3D3;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .in_progress {
+            background-color: #ffc04c;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .overdue {
+            background-color: #ff4c4c;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .completed {
+            background-color: #90EE90;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="DashBoardCtrl">
+            <div style="background-color:rgba(130, 130,130,1)">
+                <div class="row" style="padding-top:1% !important">
+                    <div class="col-md-8">
+                        <h3>
+                            <label style="text-align: left; color: rgb(255, 255, 255) !important; margin-left: 1% !important;"><b>Milestone Vs Task Dashboard</b></label>
+                        </h3>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <br />
+            <br />
+
+            <div class="container" ng-init="phaseItems">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="tile">
+                                <div class="pie1">
+
+                                    <center><canvas id="pie" class="chart chart-pie chart-xs ng-isolate-scope" chart-click="onClick" chart-data="pieData" chart-labels="labels" chart-options="options" chart-colors="colors" width="279" height="135"></canvas></center>
+
+
+                                </div>
+                                <div>
+                                    <center> <input class="btn btn-default btn-lg" style="margin-bottom: -22px; width:80%;font-size: 12px; margin-top: -31px;" type="button" value="All Tasks" ng-click="phaseFilter()" /></center>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 " ng-repeat="phase in phaseItems">
+                            <div class="tile">
+                                <div class="pie1">
+
+                                    <center><canvas id="{{phase.Id}}" chart-click="onClick" class="chart chart-pie chart-xs ng-isolate-scope" chart-data="phase.data" chart-labels="labels" chart-options="options" chart-colors="colors" width="279" height="135"></canvas></center>
+
+
+                                </div>
+
+                                <div>
+                                    <center><input class="btn btn-default btn-lg" style="margin-bottom: -22px; width:80%;font-size: 12px; margin-top: -31px;" type="button" value="{{phase.Title}}" ng-click="phaseFilter(phase.Title)" /></center>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <div>
+
+
+                <input type="button" ng-click="ExportToExcel()" value="Download Report in Excel" />
+                <div class="float">
+                    <div class="float"><span class="float">In Progress</span><div class="in_progress float"></div></div>
+                    <div class="float"><span class="float">Overdue</span><div class="overdue float"></div></div>
+                    <div class="float"><span class="float">Completed</span><div class="completed float"></div></div>
+                    <div class="float"><span class="float">Yet to Start</span><div class="yet_to_start float"></div></div>
+
+
+
+                </div>
+            </div>
+            
+           
+            
+            <div id="taskGrid" ng-disabled="diableTaskGrid" ui-grid="gridOptions" class="grid" ui-grid-exporter ui-grid-expandable ui-grid-grouping ui-grid-auto-resize ui-grid-resize-columns></div>
+
+
+            <!--<canvas id=”canvas” style="width:200px; height:200px;"></canvas>-->
+
+
+        </div>
+    </div>
+</body>

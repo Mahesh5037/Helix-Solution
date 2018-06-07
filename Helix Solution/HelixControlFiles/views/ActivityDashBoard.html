@@ -1,0 +1,165 @@
+﻿<head>
+    <title> Activity Dashboard</title>
+    
+    
+    <style>
+
+
+
+        .float {
+            float: right;
+            margin-left: 9px !important;
+        }
+
+        
+
+        
+
+        .tile {
+            width: 60%;
+            height: 170px;
+            box-shadow: 0 0 black;
+        }
+
+            
+
+        .round {
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .yet_to_start {
+            background-color: #D3D3D3;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .in_progress {
+            background-color: #ffc04c;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .overdue {
+            background-color: #ff4c4c;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+
+        .completed {
+            background-color: #90EE90;
+            border-radius: 20px;
+            height: 20px;
+            width: 20px;
+            border: 2px solid grey;
+            margin-left: 45%;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        } 
+
+
+
+    </style>
+</head>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="ActivityDashBoardCtrl">
+            <div style="background-color:rgba(130, 130,130,1)">
+                <div class="row" style="padding-top:1% !important">
+                    <div class="col-md-8">
+                        <h3>
+                            <label style="text-align: left; color: rgb(255, 255, 255) !important; margin-left: 1% !important;"><b>Milestone Vs Activity Dashboard</b></label>
+                        </h3>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <br />
+            <br />
+
+            <div class="container" ng-init="phaseItems">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="tile">
+                                <div style="padding-left:15px;">
+
+                                    <div class="c100 p{{getPhasePercentageComplete() | number:0}} green">
+
+                                        <span>{{getPhasePercentageComplete() | number:0}}%</span>
+                                        <div class="slice">
+                                            <div class="bar">
+
+                                            </div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input class="btn btn-default btn-lg" style="margin-bottom: -22px; width:100%;font-size: 12px;" type="button" value="All Activities" ng-click="phaseFilter()" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 " ng-repeat="phase in phaseItems">
+                            <div class="tile">
+                                <div style="padding-left:15px;">
+                                    <div class="c100 p{{phase.PercentageComplete | number:0}} green">
+                                        <span>{{phase.PercentageComplete | number:0}}% </span>
+                                        <div class="slice">
+                                            <div class="bar">
+
+                                            </div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <input class="btn btn-default btn-lg" style="margin-bottom: -22px; width:100%;font-size: 12px;" type="button" value="{{phase.Title}}" ng-click="phaseFilter(phase.Title)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div>
+                <input type="button" ng-click="ExportToExcel()" value="Download Report in Excel" />
+                <div class="float">
+                    <div class="float"><span class="float">In Progress</span><div class="in_progress float"></div></div>
+                    <div class="float"><span class="float">Overdue</span><div class="overdue float"></div></div>
+                    <div class="float"><span class="float">Completed</span><div class="completed float"></div></div>
+                    <div class="float"><span class="float">Yet to Start</span><div class="yet_to_start float"></div></div>
+
+
+
+                </div>
+            </div>
+
+
+            <div id="activityGrid" ng-disabled="diableTaskGrid" ui-grid="activityGridOptions" class="grid" ui-grid-exporter  ui-grid-auto-resize ui-grid-resize-columns></div>
+
+        </div>
+    </div>
+</body>
